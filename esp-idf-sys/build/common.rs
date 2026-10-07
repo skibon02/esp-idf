@@ -507,7 +507,7 @@ pub fn setup_clang_env(path: Option<&Path>) -> Result<()> {
     if let Some(path) = path {
         // Path was provided, use that instead of relying on the `espup` symlink
         std::env::set_var("LIBCLANG_PATH", path);
-    } else {
+    } else if std::env::var_os("LIBCLANG_PATH").is_none() {
         const POLICY_VAR: &str = "ESP_IDF_ESPUP_CLANG_SYMLINK";
         let policy = std::env::var(POLICY_VAR)
             .ok()
